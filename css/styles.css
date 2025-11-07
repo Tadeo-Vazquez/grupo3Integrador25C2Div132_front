@@ -1,0 +1,47 @@
+/* /////////////
+    Estilos globales
+///////////// */
+ul {
+    display:  flex;
+    justify-content:center;
+    gap: 150px;
+    align-items: space-between;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;                
+}
+
+#contenedor-productos{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+#getProducts-form{
+    width: 55 px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.products-form-amplio{
+    width: 40 px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    text-align: center;
+    justify-content: space-between;
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear</title>
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+    <body>
+            <header>
+            <nav>
+                <ul>
+                    <a href="index.html">
+                        <li>Ver</li>
+                    </a>
+                    <a href="consultar.html">
+                        <li>Consultar id</li>
+                    </a>
+                    <a href="crear.html">
+                        <li>Crear</li>
+                    </a>
+                    <a href="modificar.html">
+                        <li>Modificar</li>
+                    </a>
+                    <a href="eliminar.html">
+                        <li>Eliminar</li>
+                    </a>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <h1>Crear producto</h1>
+
+            <form id="altaProductos-form" class ="products-form-amplio">
+
+                <label for="nameProd">Nombre</label>
+                <input type="text" name="nombre" id="nameProd" required>
+                <br>
+                <label for="imageProd">Imagen</label>
+                <input type="text" name="img_url" id="imageProd" required>
+                <br>
+                <label for="categoryProd">Categoria</label>
+                <select name="tipo" id="categoryProd">
+                    <option value="digital">fisico</option>
+                    <option value="fisico">digital</option>
+                </select>
+                <br>
+                <label for="priceProd">Precio</label>
+              
+                <input type="number" name="precio" id="priceProd" required>
+                <br>
+                <input type="submit" value="crear producto">
+                
+
+            </form>
+
+
+            <hr>
+            <div id="contenedor-productos"></div>
+        </main>
+
+        <script>
+            let altaProductos_form = document.getElementById("altaProductos-form");
+             let url = "http://localhost:3000/productos"
+
+            altaProductos_form.addEventListener("submit", event =>{
+                event.preventDefault();
+
+                let formData = new FormData(event.target);
+
+                let data = Object.fromEntries(formData.entries());
+
+               // console.log(data);
+
+                enviarProducto(data);
+
+            });
+
+           async function enviarProducto(data) {
+            console.table(data); // Recibimos correctamente los datos del formulario
+
+            try {
+                // let url = "http://localhost:3000/products"
+                let response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+                console.log(response);
+
+                // Procesamos la respuesta que nos devuelve
+                let result = await response.json();
+                console.log(result);
+
+                // Vamos a verificar si la conexion fue exitosa con un "200" OK o "201" Created
+                if(response.ok) {
+                    console.log(result.message);
+                    alert(result.message);
+
+                } else { // En caso de que haya otra respuesta distinta de ok
+                    console.error(result.message);
+                    alert(result.message);
+                }
+
+
+            } catch (error) {
+                console.error("Error al enviar los datos: ", error);
+                alert("Error al procesar la solicitud");
+            }
+
+        }
+
+        </script>
+    </body>
+</html>
