@@ -3,9 +3,7 @@
 ///////////// */
 ul {
     display:  flex;
-    justify-content:center;
-    gap: 150px;
-    align-items: space-between;
+    justify-content:space-around;
     list-style: none;
 }
 
@@ -26,4 +24,11 @@ main {
     align-items: center;
     justify-content: center;
     gap: 20px;
+}
+
+#getProductos-form{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
 }

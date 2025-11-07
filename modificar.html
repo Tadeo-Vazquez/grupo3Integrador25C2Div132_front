@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Juegos</title>
+    <title>Modificar</title>
     <link rel="stylesheet" href="css/styles.css">
 
 </head>
@@ -31,13 +31,58 @@
     </header>
 
     <main>
-        <h1>Listado productos</h1>
+        <h1>Modificar producto por ID</h1>
+        <form action="" id="getProductos-form">
+            <label for="idProd">ID del producto</label>
+            <input type="number" name="idProd" id="idProd" min="1">
+
+            <input type="submit" value="Consultar">
+        </form>
         <hr>
-        <section id="contenedor-productos"></section>
+        <section id="contenedor-productos">
+            <ul id="listadoProductos"></ul>
+        </section>
     </main>
 
     <script>
+        let contenedorProductos = document.getElementById("listadoProductos");
+        let form = document.getElementById("getProductos-form")
 
+        form.addEventListener("submit", async event => {
+            event.preventDefault() // prevenimos el envio por defecto del form
+
+            // parseamos a un objeto formdata la info del form
+            let formData = new FormData(event.target);
+
+            let data = Object.fromEntries(formData.entries());
+
+            let idProducto = data.idProd;
+            console.log(idProducto);
+            
+            try{
+                let respuesta = await fetch(`http://localhost:3000/productos/${idProducto}`);
+                let datos = await respuesta.json();
+                let producto = datos.payload[0];    
+                mostrarProducto(producto)
+            }catch(error){
+                console.error(error)
+            
+            }
+
+        }
+        )
+
+        function mostrarProducto(p){
+            let htmlProducto = `<li class="li-listados">
+                                <img src="${p.img_url}" alt="${p.nombre}" class="img-listados">
+                                <p>Id: ${p.id} &nbsp; Nombre: ${p.nombre}</p>
+                                <strong>Precio: $${p.precio}</strong>
+                                </li>`;
+            contenedorProductos.innerHTML = htmlProducto
+
+        }
+
+        
     </script>
 </body>
 </html>

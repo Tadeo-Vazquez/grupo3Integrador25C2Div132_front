@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Juegos</title>
+    <title>Crear</title>
     <link rel="stylesheet" href="css/styles.css">
 
 </head>
@@ -31,13 +31,68 @@
     </header>
 
     <main>
-        <h1>Listado productos</h1>
+        <h1>Crear producto</h1>
+        <form id="altaProductos-form" style="display: flex; flex-direction: column;">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" required>
+            <br>
+            <label for="imagenProdForm">Imagen</label>
+            <input type="text" name="imagen" id="imagenProdForm" required>
+            <br>
+            <label for="catProducto">Categoria</label>
+            <select name="categoria" id="catProducto" required>
+                <option value="digital">digital</option>
+                <option value="fisico">fisico</option>
+            </select>
+            <br>
+            <label for="precioProdForm">Precio</label>
+            <input type="number" name="precio" id="precioProdForm" required>
+            <br>
+            <input type="submit" value="Crear producto">
+        </form>
         <hr>
         <section id="contenedor-productos"></section>
     </main>
 
     <script>
+        let url = `http://localhost:3000/productos`;
+        let altaProductos_form = document.getElementById("altaProductos-form")
+        altaProductos_form.addEventListener("submit", event => {
+            event.preventDefault();
+            let formData = new FormData(event.target);
+            let data = Object.fromEntries(formData.entries())
 
+            enviarProducto(data)
+        })
+
+        async function enviarProducto(data){
+            console.table(data)
+            try{
+                let respuesta = await fetch(url, {
+                    method:"POST",
+                    headers:{
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }
+                );
+                console.log(respuesta);
+                
+                let resultado = await respuesta.json();
+                console.log(resultado);
+                
+                if (respuesta.ok){
+                    console.log(resultado.message);
+                    alert(resultado.message)                   
+                }else{
+                    console.error("Error al enviar los datos, ", resultado.message);
+                    alert("Error al procesar los datos")
+                }
+            }catch(error){
+                console.error("Error al enviar los datos: " , error)
+                alert("Error al procesar la solicitud")
+            }
+        }
     </script>
 </body>
 </html>
