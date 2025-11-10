@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -32,7 +35,7 @@
 
     <main>
         <h1>Listado productos</h1>
-        <hr>
+        
         <section id="contenedor-productos"></section>
     </main>
 
@@ -56,7 +59,7 @@
         let contenidoHTML = ""
         productos.forEach(p => {
             contenidoHTML += `  <div class="card-producto">
-                                    <img src="https://nftcalendar.io/storage/uploads/2022/02/21/image-not-found_0221202211372462137974b6c1a.png" alt="" width="300px">
+                                    <img src="https://nftcalendar.io/storage/uploads/2022/02/21/image-not-found_0221202211372462137974b6c1a.png" alt="" >
                                     <h3>${p.nombre}</h3>
                                     <p>${p.id}</p>
                                     <p>$ ${p.precio}</p>

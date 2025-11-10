@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultar</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -33,17 +36,19 @@
     <main>
         <h1>Consultar producto por ID</h1>
         <form action="" id="getProductos-form">
-            <label for="idProd">ID del producto</label>
-            <input type="number" name="idProd" id="idProd" min="1">
-
-            <input type="submit" value="Consultar">
+            <div>
+            <label for="idProd" id="label-idProd">ID del producto</label>
+            <hr>
+            <input type="number" name="idProd" id="idProd" min="1" class="inTransColor">
+            </div>
+            <input type="submit" id="boton-consultar" value="Consultar">
         </form>
-        <hr>
-        <section id="contenedor-productos">
+        
+        <section id="contenedor-productos" class="cont-prod-cons">
             <ul id="listadoProductos"></ul>
         </section>
     </main>
-
+    
     <script>
         let contenedorProductos = document.getElementById("listadoProductos");
         let form = document.getElementById("getProductos-form")
@@ -74,8 +79,8 @@
 
         function mostrarProducto(p){
             let htmlProducto = `<li class="li-listados">
-                                <img src="${p.img_url}" alt="${p.nombre}" class="img-listados">
-                                <p>Id: ${p.id} &nbsp; Nombre: ${p.nombre}</p>
+                                <img src="https://nftcalendar.io/storage/uploads/2022/02/21/image-not-found_0221202211372462137974b6c1a.png" alt="${p.nombre}" class="img-listados">
+                                <p>Id: ${p.id}</p>  <p>Nombre: ${p.nombre}</p>
                                 <strong>Precio: $${p.precio}</strong>
                                 </li>`;
             contenedorProductos.innerHTML = htmlProducto
