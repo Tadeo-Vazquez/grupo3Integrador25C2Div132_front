@@ -46,10 +46,12 @@
         
         <section id="contenedor-productos" class="cont-prod-cons">
             <ul id="listadoProductos"></ul>
+            <div id="contenedorMensaje"></div>
         </section>
     </main>
     
     <script>
+        let contenedorMensaje = document.getElementById("contenedorMensaje")
         let contenedorProductos = document.getElementById("listadoProductos");
         let form = document.getElementById("getProductos-form")
 
@@ -65,10 +67,15 @@
             console.log(idProducto);
             
             try{
-                let respuesta = await fetch(`http://localhost:3000/productos/${idProducto}`);
+                let respuesta = await fetch(`http://localhost:3000/api/productos/${idProducto}`);
                 let datos = await respuesta.json();
-                let producto = datos.payload[0];    
-                mostrarProducto(producto)
+                if (respuesta.ok){
+                    let producto = datos.payload[0];    
+                    mostrarProducto(producto)
+                    }else{
+                        mostrarError(datos.message)
+                    }
+
             }catch(error){
                 console.error(error)
             
@@ -83,8 +90,13 @@
                                 <p>Id: ${p.id}</p>  <p>Nombre: ${p.nombre}</p>
                                 <strong>Precio: $${p.precio}</strong>
                                 </li>`;
-            contenedorProductos.innerHTML = htmlProducto
 
+            contenedorProductos.innerHTML = htmlProducto;
+            contenedorMensaje.innerHTML = ``
+        }
+
+        function mostrarError(message){
+            contenedorMensaje.innerHTML = `<span> ${message} </span>`
         }
 
         
