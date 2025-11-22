@@ -128,8 +128,8 @@ function ordenarPorNombre() {
 
 
 if (botonCategoria) {
-  botonCategoria.addEventListener("change", (e) => {
-    filtrarProductos(e.target.value);
+  botonCategoria.addEventListener("click", event => {
+    filtrarProductos(event.target.value);
   });
 }
 
