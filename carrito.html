@@ -12,6 +12,8 @@
       href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap"
       rel="stylesheet"
     />
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </head>
   <body>
     <header>
@@ -27,30 +29,19 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main-carrito">
       <h1>Tu Carrito de Compras</h1>
-      <div id="carrito-vacio" class="" >
+      <!-- <div id="carrito-vacio" class="" >
         <p>
           Carrito vacío.
         </p>
-      </div>
+      </div> -->
 
       <section id="contenedor-carrito">
         <ul id="lista-carrito" class=""></ul>
 
-        <div class="carrito-pie-de-pagina">
-          <div>
-            <p class="">Total a pagar</p>
-            <p id="precio-total-carrito" class=""></p>
-          </div>
-          <div class="cart-actions">
-            <button id="boton-vaciar-carrito" class="">
-              Vaciar Carrito
-            </button>
-            <button id="boton-confirmar-compra" class="">
-              Confirmar Compra
-            </button>
-          </div>
+        <div id="carrito-pie-de-pagina">
+          
         </div>
       </section>
     </main>

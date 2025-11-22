@@ -1,3 +1,7 @@
+* {
+  max-width: 100%;
+}
+
 /* /////////////
     Estilos globales
 ///////////// */
@@ -12,6 +16,10 @@ html {
   background-attachment: fixed;
   font-family: "Momo Trust Display", sans-serif;
   height: 100%;
+}
+
+button:hover{
+  cursor: pointer;
 }
 
 ul {
@@ -33,12 +41,7 @@ main {
 }
 
 
-#getProductos-form{
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  justify-content: center;
-}
+
 
 /* Estilos "Listado de productos" */
 
@@ -65,10 +68,13 @@ main {
   font-size: 0.85rem;
 }
 
+
 nav ul {
   background-color: rgba(223, 223, 223, 0.605);
   padding: 10px;
   border-radius: 15px;
+  margin: 0 auto;
+  max-width: 800px;
 }
 
 nav ul a{
@@ -83,159 +89,172 @@ nav ul a:hover {
   color: white;
 }
 
+#contenedor-filtros{
+  display: flex;
+  justify-content: space-between;
+  width: 800px;
+  max-width: 100%;
+  align-items: center;
+  margin-bottom: 30px;
+  }
+
+.botones-ordenar{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
 .card-producto img {
   width: 200px;
+  height: 300px;
   border-radius: 10px 10px 0px 0px;
 }
 
-.card-producto:hover{
-  scale: 1.2;
+#lista-carrito{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-/* Estilos "Consultar producto" */
-
-.cont-prod-cons{
-  margin-top: 30px;
-  width: 100%;
+.list-carrritoProducto{
+  width: 700px auto;
+  display: flex;
+  justify-content:space-between ;
+  border: 3px solid rgba(101, 114, 112, 0.415);
+  background-color: rgba(30, 161, 255, 0.343);
+  border-radius: 5px;
+  gap: 25px;
+  padding: 5px;
 }
 
-#listado-productos {
-  width: 100%;
+.cont-info-producto{
+  display: flex;
+  gap: 10px
+}
+
+.card-carrito-producto , .datos-prod-carrito{
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-inline-start: 0;
+  gap: 15px
 }
 
-.li-listados {
+.datos-prod-carrito{
+  width: 255px;
+}
+
+.card-carrito-producto {
+  flex-direction: column;
+  align-items: self-start;
+}
+
+.card-edicion-carrito{
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 50px;
-  font-family: "Momo Trust Display", sans-serif;
-  border: 2px solid rgba(101, 114, 112, 0.415);
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.li-botonera{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* .li-botonera button{
-} */
-
-.li-listados img {
-  width: 65px;
-  border-radius: 8px;
-  transition: all .4s;
-}
-
-.li-listados img:hover {
-  transform: scale(2);
   
 }
 
-#getProductos-form{
-  width: 170px;
-  height: 150px;
-}
-
-#getProductos-form, #altaProductos-form, #updateProductos-form{
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  border: 2px solid rgba(101, 114, 112, 0.415);
-  align-items: center;
-  padding: 20px;
+.img_carrito{
+  width: 80px;
+  height: 120px;
   border-radius: 10px;
-  background-color: #00225966; 
+  transition: all .5s;
 }
 
-#idProd{
-  width: 60px;
+.img_carrito:hover{
+  transform: scale(1.5);
 }
 
-.inTransColor{
-  padding: 5px 10px;
-  transition: all 0.5s;
-  font-weight: 800;
-}
 
-.inTransColor:focus{
-  background-color: black;
+.boton-disminuir-cantidad , .boton-aumentar-cantidad, .boton-eliminar-elemento{
+  background: none;
+  border: none;
   color: white;
 }
 
-#boton-consultar, #boton-creaProd{
-  padding: 10px 10px;
-  background-color: rgb(206, 213, 220);
-  border-radius: 10px;
+.boton-disminuir-cantidad {
+  margin-right: 4px;
+}
+.boton-aumentar-cantidad{
+  margin-left: 4px;
+}
+
+.svg-trash, .svg-plus, .svg-minus{
+  width: 25px;
+  height: 25px;
+}
+
+.item-cantidad-carrito{
+  font-size: 18px;
+}
+
+.svg-button{
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.svg-button:hover{
+  background-color: rgba(128, 128, 128, 0.5);
+  box-shadow: 0px 0px 12px 0px rgba(240, 240, 240, 0.5);
+  -webkit-box-shadow: 0px 0px 12px 0px rgba(240, 240, 240, 0.5);
+  -moz-box-shadow: 0px 0px 12px 0px rgba(240, 240, 240, 0.5);
+}
+
+#cont-total{
+  display: flex;
+  justify-content:flex-end;
+  gap: 10px;
+  width: 700px;
+  max-width: 100%;
+  margin-top: 50px;
+}
+
+.cont-cart-actions{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 700px;
+  max-width: 100%;
+}
+
+#boton-vaciar-carrito{
+  font-family: "Momo Trust Display", sans-serif;
+  background-color: transparent;
   border: none;
-  box-shadow: 0px 0px 7px 4px rgb(47, 53, 52);
-  -webkit-box-shadow: 0px 0px 7px 4px rgb(47, 53, 52);
-  -moz-box-shadow: 0px 0px 7px 4px rgb(47, 53, 52);
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: 700;
-  transition: all .15s;
+  background-color: rgba(124, 124, 124, 0.588);
+  width: 200px;
+  padding: 8px 5px;
+  border-radius: 5px;
+  font-size: 15px;
+  color: white;
 }
 
-#boton-consultar:hover,#boton-creaProd:hover{
-  cursor: pointer;
-  transform: scaleY(.90);
-  transform-origin: bottom;
-  background-color: rgb(150, 155, 160);
-
+#boton-confirmar-compra{
+  color: white;
+  font-family: "Momo Trust Display", sans-serif;
+  width: 400px;
+  background-color: rgba(0, 47, 255, 0.533);
+  border: none;
+  padding: 20px 5px;  
+  border-radius: 5px;
+  font-size: 25px;
+  margin-bottom: 10px;
 }
 
-/* Estilos "Crear producto"*/
-#altaProductos-form, #updateProductos-form{
-  gap: 30px;
-  width: 270px;
+#boton-confirmar-compra:hover{
+  background-color: rgb(0, 47, 255);
+}
+#boton-vaciar-carrito:hover{
+  background-color: rgb(124, 124, 124);
 }
 
-#altaProductos-form, div{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-#catProducto{
-  width: 90px;
-  text-align: center;
-  padding: 10px 0;
-  font-family:'Courier New', Courier, monospace;
+#main-carrito{
+  width: 800px;
+  max-width: 100%;
+  margin: 0 auto;
+  margin-top: 10px;
   border-radius: 10px;
-}
-
-#cont-mensaje-creado{
-  margin-top: 30px;
-  display: flex;
-}
-
-#prodCreado{
-  color:rgb(44, 191, 44);
-  border: 2px solid rgb(44, 191, 44);
-  padding: 30px 45px;
-  border-radius: 10px;
-  background-color: rgba(150, 155, 160, 0.14) ;
-}
-
-#prodNoCreado{
-  color: crimson;
-  border: 2px solid crimson;
-  padding: 30px 45px;
-  border-radius: 10px;
-  background-color: rgba(150, 155, 160, 0.14) ;
-
-}
-
-#updateProductos-form div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  background-color: rgba(255, 255, 255, 0.058);
 }

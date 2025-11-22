@@ -72,9 +72,7 @@ function mostrarProductos(array) {
             juego.id 
           })">Agregar al carrito</button>
         </div>
-      `;
-
-      
+      `;      
   });
   contenedorJuegos.innerHTML = cartaProducto;
 }
@@ -127,19 +125,14 @@ function ordenarPorNombre() {
 }
 
 
-if (botonCategoria) {
-  botonCategoria.addEventListener("click", event => {
-    filtrarProductos(event.target.value);
-  });
-}
+botonCategoria.addEventListener("click", event => {
+  filtrarProductos(event.target.value);
+});
 
-if (botonOrdenarNombre) {
-  botonOrdenarNombre.addEventListener("click", ordenarPorNombre);
-}
+botonOrdenarNombre.addEventListener("click", ordenarPorNombre);
 
-if (botonOrdenarPrecio) {
-  botonOrdenarPrecio.addEventListener("click", ordenarPorPrecio);
-}
+botonOrdenarPrecio.addEventListener("click", ordenarPorPrecio);
+
 
 //************************************************************************ *//
 

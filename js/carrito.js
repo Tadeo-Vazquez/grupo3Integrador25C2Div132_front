@@ -18,6 +18,7 @@ const carritoVacio = document.getElementById("carrito-vacio");
 const precioTotalCarrito = document.getElementById("precio-total-carrito");
 const botonVaciarCarrito = document.getElementById("boton-vaciar-carrito");
 const botonConfirmarCompra = document.getElementById("boton-confirmar-compra");
+const carritoPieDePagina = document.getElementById("carrito-pie-de-pagina")
 
 function calcularPrecioTotal() {
   if (carrito.length === 0) {
@@ -30,40 +31,55 @@ function calcularPrecioTotal() {
 
 function mostrarCarrito() {
   if (carrito.length === 0) {
-    contenedorCarrito.style.display = "none";
-    carritoVacio.style.display = "block";
-    precioTotalCarrito.textContent = "$0";
+    contenedorCarrito.innerHTML = `<h2> No hay productos en el carrito. </h2>`
     return;
   }
 
-  carritoVacio.style.display = "none";
   contenedorCarrito.style.display = "block";
-
+  
   let htmlCarrito = "";
-
-  carrito.forEach((item, indice) => {
+  
+  carrito.forEach((item, indice) => {    
     const subtotal = item.precio * item.cantidad;
     htmlCarrito += `
       <li class="list-carrritoProducto">
+      <div class="cont-info-producto">
+        <img src="${item.img_url || "img/placeholder.png"}" alt="${item.nombre}" class="img_carrito">
         <div class="card-carrito-producto">
-          <img src="${item.img_url || "img/placeholder.png"}" alt="${item.nombre}">
             <h3>${item.nombre}</h3>
-            <p>Categoría: ${item.tipo || "Sin categoría"}</p>
-            <p>Precio unitario: $${item.precio}</p>
-          </div>
-          <div class="card-edicion-carrito">
-            <button class="boton-disminuir-cantidad" onclick="disminuirCantidad(${indice})">-</button>
-            <p>${item.cantidad}</p>
-            <button class="boton-aumentar-cantidad" onclick="aumentarCantidad(${indice})">+</button>
-          </div>
-          <div class="card-precio-carrito">$${subtotal}</div>
-          <button class="boton-eliminar-elemento" onclick="eliminarElemento(${indice})">Eliminar</button>
-      </li>
+            <div class="cont-datos-producto">
+              <span>${item.tipo.toUpperCase() || "Sin categoría"} | $${item.precio}</span>
+              
+            </div>
+        </div>
+      </div>
+      <div class="datos-prod-carrito">
+        <div class="card-edicion-carrito">
+          <button class="boton-disminuir-cantidad edit-prod-carrito" onclick="disminuirCantidad(${indice})"><ion-icon name="remove-circle-outline" class="svg-minus svg-button"></ion-icon></button>
+          <p class="item-cantidad-carrito">${item.cantidad}</p>
+          <button class="boton-aumentar-cantidad edit-prod-carrito" onclick="aumentarCantidad(${indice})"><ion-icon name="add-circle-outline" class="svg-plus svg-button"></ion-icon></button>
+        </div>
+        <button class="boton-eliminar-elemento edit-prod-carrito" onclick="eliminarElemento(${indice})"><ion-icon name="trash-outline" class="svg-trash svg-button"></ion-icon></button>
+        <div class="card-precio-carrito">$${subtotal}</div>
+      </div>
+          </li>
     `;
-  });
 
+    carritoPieDePagina.innerHTML = `
+            <div id="cont-total">
+              <span class="">Total</span>
+              <span id="precio-total-carrito" class="">$ ${calcularPrecioTotal()}</span>
+            </div>
+            <div class="cont-cart-actions">
+              <button id="boton-vaciar-carrito" onclick="vaciarCarrito()" class="">
+                Vaciar Carrito
+              </button>
+              <button id="boton-confirmar-compra" class="">
+                Confirmar Compra
+              </button>
+            </div>`
+  });
   listaCarrito.innerHTML = htmlCarrito;
-  precioTotalCarrito.textContent = `$${calcularPrecioTotal()}`;
 }
 
 
@@ -110,9 +126,8 @@ function vaciarCarrito() {
     mostrarCarrito();
   }
 }
-if (botonVaciarCarrito) {
-  botonVaciarCarrito.addEventListener("click", vaciarCarrito);
-}
+
+
 
 
 function initCarrito() {
