@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrito de Compras</title>
+    <script src="js/carrito.js" defer type="module"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <a href="index.html">
+            <li>Productos</li>
+          </a>
+          <a href="carrito.html">
+            <li>Carrito</li>
+          </a>
+          <a href="ticket.html">
+            <li>Ticket</li>
+          </a>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Tu Carrito de Compras</h1>
+      <div id="carrito-vacio" class="" >
+        <p>
+          Carrito vacío.
+        </p>
+      </div>
+
+      <section id="contenedor-carrito">
+        <ul id="lista-carrito" class=""></ul>
+
+        <div class="carrito-pie-de-pagina">
+          <div>
+            <p class="">Total a pagar</p>
+            <p id="precio-total-carrito" class=""></p>
+          </div>
+          <div class="cart-actions">
+            <button id="boton-vaciar-carrito" class="">
+              Vaciar Carrito
+            </button>
+            <button id="boton-confirmar-compra" class="">
+              Confirmar Compra
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

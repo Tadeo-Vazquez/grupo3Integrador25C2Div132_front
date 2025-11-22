@@ -1,47 +1,241 @@
 /* /////////////
     Estilos globales
 ///////////// */
+html { 
+  /* background-color: #003791; */
+  height: 100%;
+  /* background: linear-gradient(180deg, #003791, #000000); */
+  background-image: url("https://images.unsplash.com/photo-1621947081720-86970823b77a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZvbmRvJTIwZGUlMjBwYW50YWxsYSUyMGRlJTIwcGxheXN0YXRpb258ZW58MHx8MHx8fDA%3D&fm=jpg&q=60&w=3000");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  background-attachment: fixed;
+  font-family: "Momo Trust Display", sans-serif;
+  height: 100%;
+}
+
 ul {
-    display:  flex;
-    justify-content:center;
-    gap: 150px;
-    align-items: space-between;
-    list-style: none;
+  padding-left: 0;
+  display:  flex;
+  justify-content:space-around;
+  list-style: none;
 }
 
 a {
-    text-decoration: none;
-    color: black;
+  text-decoration: none;
+  color: black;
 }
 
 main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;                
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+
+#getProductos-form{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+
+/* Estilos "Listado de productos" */
 
 #contenedor-productos{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
-#getProducts-form{
-    width: 55 px;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    text-align: center;
-    justify-content: space-between;
+.card-producto{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(101, 114, 112, 0.415);
+  background-color: rgba(30, 161, 255, 0.343);
+  transition: all .4s;
+  border-radius: 12px;
 }
 
-.products-form-amplio{
-    width: 40 px;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    text-align: center;
-    justify-content: space-between;
+.card-producto{
+  font-size: 0.85rem;
+}
+
+nav ul {
+  background-color: rgba(223, 223, 223, 0.605);
+  padding: 10px;
+  border-radius: 15px;
+}
+
+nav ul a{
+  padding: 10px;
+  border-radius: 10px;
+  transition: all .5s;
+  font-family: "Momo Trust Display", sans-serif;
+}
+
+nav ul a:hover {
+  background: rgb(0, 0, 0);
+  color: white;
+}
+
+.card-producto img {
+  width: 200px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.card-producto:hover{
+  scale: 1.2;
+}
+
+/* Estilos "Consultar producto" */
+
+.cont-prod-cons{
+  margin-top: 30px;
+  width: 100%;
+}
+
+#listado-productos {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline-start: 0;
+}
+
+.li-listados {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  font-family: "Momo Trust Display", sans-serif;
+  border: 2px solid rgba(101, 114, 112, 0.415);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.li-botonera{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .li-botonera button{
+} */
+
+.li-listados img {
+  width: 65px;
+  border-radius: 8px;
+  transition: all .4s;
+}
+
+.li-listados img:hover {
+  transform: scale(2);
+  
+}
+
+#getProductos-form{
+  width: 170px;
+  height: 150px;
+}
+
+#getProductos-form, #altaProductos-form, #updateProductos-form{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  border: 2px solid rgba(101, 114, 112, 0.415);
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #00225966; 
+}
+
+#idProd{
+  width: 60px;
+}
+
+.inTransColor{
+  padding: 5px 10px;
+  transition: all 0.5s;
+  font-weight: 800;
+}
+
+.inTransColor:focus{
+  background-color: black;
+  color: white;
+}
+
+#boton-consultar, #boton-creaProd{
+  padding: 10px 10px;
+  background-color: rgb(206, 213, 220);
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0px 0px 7px 4px rgb(47, 53, 52);
+  -webkit-box-shadow: 0px 0px 7px 4px rgb(47, 53, 52);
+  -moz-box-shadow: 0px 0px 7px 4px rgb(47, 53, 52);
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  transition: all .15s;
+}
+
+#boton-consultar:hover,#boton-creaProd:hover{
+  cursor: pointer;
+  transform: scaleY(.90);
+  transform-origin: bottom;
+  background-color: rgb(150, 155, 160);
+
+}
+
+/* Estilos "Crear producto"*/
+#altaProductos-form, #updateProductos-form{
+  gap: 30px;
+  width: 270px;
+}
+
+#altaProductos-form, div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+#catProducto{
+  width: 90px;
+  text-align: center;
+  padding: 10px 0;
+  font-family:'Courier New', Courier, monospace;
+  border-radius: 10px;
+}
+
+#cont-mensaje-creado{
+  margin-top: 30px;
+  display: flex;
+}
+
+#prodCreado{
+  color:rgb(44, 191, 44);
+  border: 2px solid rgb(44, 191, 44);
+  padding: 30px 45px;
+  border-radius: 10px;
+  background-color: rgba(150, 155, 160, 0.14) ;
+}
+
+#prodNoCreado{
+  color: crimson;
+  border: 2px solid crimson;
+  padding: 30px 45px;
+  border-radius: 10px;
+  background-color: rgba(150, 155, 160, 0.14) ;
+
+}
+
+#updateProductos-form div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
