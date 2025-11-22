@@ -1,28 +1,4 @@
-const API_BASE_URL = "http://localhost:3000/api/productos";
-
-let todosLosJuegos = [];
 let carrito = [];
-
-async function obtenerJuegos() {
-  try {
-    const respuesta = await fetch(API_BASE_URL);
-   
-    const juegos = await respuesta.json();
-
-    console.log("Datos de los juegos API:", juegos);
-    if(!juegos){
-      todosLosJuegos = [];
-    }
-    todosLosJuegos = juegos.payload
-
-    return todosLosJuegos;
-
-  } catch (error) {
-    console.error("Hubo un error al obtener los juegos:", error);
-    return [];
-  }
-}
-
 
 function guardarCarritoLocalStorage() {
   localStorage.setItem("carritoJuegos", JSON.stringify(carrito));
