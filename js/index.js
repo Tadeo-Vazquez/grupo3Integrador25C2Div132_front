@@ -1,4 +1,39 @@
-import {todosLosJuegos, carrito, obtenerJuegos, guardarCarritoLocalStorage, cargarCarritoLocalStorage} from "./utils.js"
+const API_BASE_URL = "http://localhost:3000/api/productos";
+
+let todosLosJuegos = [];
+let carrito = [];
+
+async function obtenerJuegos() {
+  try {
+    const respuesta = await fetch(API_BASE_URL);
+   
+    const juegos = await respuesta.json();
+
+    console.log("Datos de los juegos API:", juegos);
+    if(!juegos){
+      todosLosJuegos = [];
+    }
+    todosLosJuegos = juegos.payload
+
+    return todosLosJuegos;
+
+  } catch (error) {
+    console.error("Hubo un error al obtener los juegos:", error);
+    return [];
+  }
+}
+
+
+function guardarCarritoLocalStorage() {
+  localStorage.setItem("carritoJuegos", JSON.stringify(carrito));
+}
+
+function cargarCarritoLocalStorage() {
+  const carritoGuardado = localStorage.getItem("carritoJuegos");
+  if (carritoGuardado) {
+    carrito = JSON.parse(carritoGuardado);
+  }
+}
 
 //**************************variables globales*****************************//
 
@@ -8,8 +43,21 @@ const botonOrdenarNombre = document.getElementById("ordenar-por-nombre");
 
 const botonOrdenarPrecio = document.getElementById("ordenar-por-precio");
 
+const botonCategoria = document.getElementById("catProducto")
 
 //*************************************************************************//
+function filtrarProductos(categoria) {
+    let productosFiltrados = [];
+    if (categoria === "todos") {
+    productosFiltrados = todosLosJuegos;
+    }else{
+      productosFiltrados = todosLosJuegos.filter((juego) =>
+      juego.tipo === categoria
+   );
+    }
+
+  mostrarProductos(productosFiltrados);
+}
 
 function mostrarProductos(array) {
   let cartaProducto = "";
@@ -20,11 +68,13 @@ function mostrarProductos(array) {
           <h3>${juego.nombre}</h3>
           <p>Categoría: ${juego.tipo}</p>
           <p>$ ${juego.precio}</p>
-          <button onclick="agregarACarrito(${
-            juego.id
+          <button class="boton-agregar-a-carrito" onclick="agregarACarrito(${ 
+            juego.id 
           })">Agregar al carrito</button>
         </div>
       `;
+
+      
   });
   contenedorJuegos.innerHTML = cartaProducto;
 }
@@ -47,7 +97,7 @@ function agregarACarrito(id) {
     });
   }
 
-//  console.log(carrito);
+ //  console.log(carrito);
 
   guardarCarritoLocalStorage();
 
@@ -76,6 +126,13 @@ function ordenarPorNombre() {
   mostrarProductos(juegos);
 }
 
+
+if (botonCategoria) {
+  botonCategoria.addEventListener("change", (e) => {
+    filtrarProductos(e.target.value);
+  });
+}
+
 if (botonOrdenarNombre) {
   botonOrdenarNombre.addEventListener("click", ordenarPorNombre);
 }
@@ -95,9 +152,7 @@ async function init() {
   } else {
     console.error("No se pudo obtener o el array está vacío.");
   }
-
- 
 }
-window.agregarACarrito = agregarACarrito;
+
 init();
 

@@ -1,4 +1,40 @@
-import { carrito, guardarCarritoLocalStorage, cargarCarritoLocalStorage} from "./utils.js";
+const API_BASE_URL = "http://localhost:3000/api/productos";
+
+let todosLosJuegos = [];
+let carrito = [];
+
+async function obtenerJuegos() {
+  try {
+    const respuesta = await fetch(API_BASE_URL);
+   
+    const juegos = await respuesta.json();
+
+    console.log("Datos de los juegos API:", juegos);
+    if(!juegos){
+      todosLosJuegos = [];
+    }
+    todosLosJuegos = juegos.payload
+
+    return todosLosJuegos;
+
+  } catch (error) {
+    console.error("Hubo un error al obtener los juegos:", error);
+    return [];
+  }
+}
+
+
+function guardarCarritoLocalStorage() {
+  localStorage.setItem("carritoJuegos", JSON.stringify(carrito));
+}
+
+function cargarCarritoLocalStorage() {
+  const carritoGuardado = localStorage.getItem("carritoJuegos");
+  if (carritoGuardado) {
+    carrito = JSON.parse(carritoGuardado);
+  }
+}
+
 
 const contenedorCarrito = document.getElementById("contenedor-carrito");
 const listaCarrito = document.getElementById("lista-carrito");
@@ -40,12 +76,12 @@ function mostrarCarrito() {
             <p>Precio unitario: $${item.precio}</p>
           </div>
           <div class="card-edicion-carrito">
-            <button onclick="disminuirCantidad(${indice})">-</button>
+            <button class="boton-disminuir-cantidad" onclick="disminuirCantidad(${indice})">-</button>
             <p>${item.cantidad}</p>
-            <button onclick="aumentarCantidad(${indice})">+</button>
+            <button class="boton-aumentar-cantidad" onclick="aumentarCantidad(${indice})">+</button>
           </div>
           <div class="card-precio-carrito">$${subtotal}</div>
-          <button class="card-eliminar-elemento-carrito" onclick="eliminarElemento(${indice})">Eliminar</button>
+          <button class="boton-eliminar-elemento" onclick="eliminarElemento(${indice})">Eliminar</button>
       </li>
     `;
   });
@@ -53,6 +89,8 @@ function mostrarCarrito() {
   listaCarrito.innerHTML = htmlCarrito;
   precioTotalCarrito.textContent = `$${calcularPrecioTotal()}`;
 }
+
+
 
 function aumentarCantidad(indice) {
   if (carrito[indice]) {
@@ -80,7 +118,6 @@ function eliminarElemento(indice) {
     confirm("¿Estás seguro de que querés eliminar este producto del carrito?")
   ) {
     carrito.splice(indice, 1);
-
     guardarCarritoLocalStorage();
     mostrarCarrito();
   }
@@ -102,16 +139,10 @@ if (botonVaciarCarrito) {
 }
 
 
-
-
 function initCarrito() {
   cargarCarritoLocalStorage();
   mostrarCarrito();
 }
 
-window.mostrarCarrito = mostrarCarrito;
-window.disminuirCantidad = disminuirCantidad;
-window.aumentarCantidad = aumentarCantidad;
-window.eliminarElemento = eliminarElemento;
 
 initCarrito();
