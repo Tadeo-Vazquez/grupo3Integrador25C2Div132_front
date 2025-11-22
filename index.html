@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="js/index.js" defer type="module"></script>
+    <script src="js/index.js" defer></script>
     <title>tienda de juegos</title>
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,15 +23,17 @@
           <a href="carrito.html">
             <li>Carrito</li>
           </a>
-          <a href="ticket.html">
-            <li>Ticket</li>
-          </a>
         </ul>
       </nav>
     </header>
 
     <main>
       <h1>Tienda de Juegos</h1>
+       <select name="categoria" id="catProducto" class="inTransColor" required>
+            <option value="todos">Todos</option>
+            <option value="digital">Digital</option>
+            <option value="fisico">Fisico</option>
+        </select>
       <div class="botones-ordenar">
         <button id="ordenar-por-nombre">Ordenar por Nombre (A-Z)</button>
         <button id="ordenar-por-precio">
