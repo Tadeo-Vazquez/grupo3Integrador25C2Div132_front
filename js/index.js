@@ -66,7 +66,7 @@ function mostrarProductos(array) {
         <div class="card-producto">
           <img src="${juego.img_url || "img/placeholder.png"}" alt="${juego.nombre}" class="img-producto">
           <h3>${juego.nombre}</h3>
-          <p>Categoría: ${juego.tipo}</p>
+          <p>${juego.tipo.toUpperCase()}</p>
           <p>$ ${juego.precio}</p>
           <button class="boton-agregar-a-carrito" onclick="agregarACarrito(${ 
             juego.id 
@@ -80,21 +80,15 @@ function mostrarProductos(array) {
 function mostrarProductosReordenamiento(productos) {
   const contenedor = document.getElementById("contenedor-productos");
 
-    // 1) Fade out
+    // desaparecer los productos
     contenedor.classList.add("fade-out");
 
     setTimeout(() => {
-      // 2) Cambiar productos cuando ya está desvanecido
+      // mostrar productos desaparecidos
       mostrarProductos(productos);
 
-      // 3) Fade in
+      // aparecer productos ordenados
       contenedor.classList.remove("fade-out");
-      contenedor.classList.add("fade-in");
-
-      // 4) Sacar la clase después de terminar la animación
-      setTimeout(() => {
-          contenedor.classList.remove("fade-in");
-      }, 400);
 
   }, 400); 
 }

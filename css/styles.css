@@ -102,6 +102,7 @@ nav ul a:hover {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 270px;
 }
 
 
@@ -282,18 +283,25 @@ nav ul a:hover {
 
 #contenedor-productos {
   opacity: 1;
-  transition: opacity 0.3s ease; 
+  transition: opacity 1.5s ease; 
 }
 
 #contenedor-productos.fade-out {
   opacity: 0;
 }
 
-#contenedor-productos.fade-in {
-  opacity: 1;
-}
-
 .add-cart-svg{
   width: 45px;
 }
 
+.boton-filtro {
+  padding: 5px 15px;
+  font-size: 0.8rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+.boton-filtro:hover{
+  transform: scale(1.05);  
+  font-weight: 600;
+}
