@@ -105,7 +105,7 @@ nav ul a:hover {
 }
 
 
-.card-producto img {
+.img-producto{
   width: 200px;
   height: 300px;
   border-radius: 10px 10px 0px 0px;
@@ -258,3 +258,42 @@ nav ul a:hover {
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.058);
 }
+
+#cont-total span {
+  font-size: 25px;
+  text-shadow: 4px 5px 4px #000000;
+}
+
+#svg-cart{
+  margin-bottom: -5px;
+}
+
+.boton-agregar-a-carrito{
+  background-color: rgb(0, 202, 0);
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 7px;
+}
+
+.boton-agregar-a-carrito:hover{
+  background-color:  #00ff0d;
+  box-shadow: 0px 0px 15px 5px #000000;
+}
+
+#contenedor-productos {
+  opacity: 1;
+  transition: opacity 0.3s ease; 
+}
+
+#contenedor-productos.fade-out {
+  opacity: 0;
+}
+
+#contenedor-productos.fade-in {
+  opacity: 1;
+}
+
+.add-cart-svg{
+  width: 45px;
+}
+

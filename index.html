@@ -12,6 +12,8 @@
       href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/png" href="http://localhost:3000/img/iconIndex.png">
+
   </head>
   <body>
     <header>
@@ -30,19 +32,17 @@
     <main>
       <h1>Tienda de Juegos</h1>
       <div id="contenedor-filtros">
-      <div>
-        <select name="categoria" id="catProducto" class="inTransColor" required>
-              <option value="todos">Todos</option>
-              <option value="digital">Digital</option>
-              <option value="fisico">Fisico</option>
-        </select>
-      </div>
-      <div class="botones-ordenar">
-          <button id="ordenar-por-nombre">Ordenar por Nombre (A-Z)</button>
-          <button id="ordenar-por-precio">
-            Ordenar por Precio (Menor a Mayor)
-          </button>
-      </div>
+        <div>
+          <select name="categoria" id="catProducto" class="inTransColor" required>
+                <option value="todos">Todos</option>
+                <option value="digital">Digital</option>
+                <option value="fisico">Fisico</option>
+          </select>
+        </div>
+        <div class="botones-ordenar">
+            <button id="ordenar-por-nombre">Ordenar por Nombre (A-Z)</button>
+            <button id="ordenar-por-precio">Ordenar por Precio (Menor a Mayor)</button>
+        </div>
       </div>
       <section id="contenedor-productos"></section>
     </main>

@@ -11,7 +11,6 @@ function cargarCarritoLocalStorage() {
   }
 }
 
-
 const contenedorCarrito = document.getElementById("contenedor-carrito");
 const listaCarrito = document.getElementById("lista-carrito");
 const carritoVacio = document.getElementById("carrito-vacio");
@@ -19,6 +18,8 @@ const precioTotalCarrito = document.getElementById("precio-total-carrito");
 const botonVaciarCarrito = document.getElementById("boton-vaciar-carrito");
 const botonConfirmarCompra = document.getElementById("boton-confirmar-compra");
 const carritoPieDePagina = document.getElementById("carrito-pie-de-pagina")
+
+
 
 function calcularPrecioTotal() {
   if (carrito.length === 0) {
@@ -74,7 +75,7 @@ function mostrarCarrito() {
               <button id="boton-vaciar-carrito" onclick="vaciarCarrito()" class="">
                 Vaciar Carrito
               </button>
-              <button id="boton-confirmar-compra" class="">
+              <button id="boton-confirmar-compra" onclick="confirmarCompra()"class="">
                 Confirmar Compra
               </button>
             </div>`
@@ -116,10 +117,6 @@ function eliminarElemento(indice) {
 }
 
 function vaciarCarrito() {
-  if (carrito.length === 0) {
-    return;
-  }
-
   if (confirm("¿Estás seguro de que querés vaciar el carrito?")) {
     carrito.length = 0;
     guardarCarritoLocalStorage();
@@ -127,7 +124,37 @@ function vaciarCarrito() {
   }
 }
 
+const confirmarCompra = async () => {
+  if (!confirm("Deseas confirmar la compra?")){
+    return;
+  } ;
 
+  const datosVenta = {
+    fecha: new Date().toISOString().slice(0, 19).replace("T", " "),
+    nombre_usuario: "AGREGAR LOGIN",
+    productos: carrito
+  };
+
+  try {
+    const respuesta = await fetch("http://localhost:3000/api/ventas", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datosVenta)
+    });
+
+    const resultado = await respuesta.json();
+    console.log(resultado);
+
+    alert("Compra realizada! Ve a la caja con tu ticket a retirarla");
+    carrito.length = 0
+    guardarCarritoLocalStorage()
+    mostrarCarrito();
+
+  } catch (error) {
+    console.error("Error al enviar los datos: ", error);
+    alert("Error al procesar la solicitud");
+  }
+};
 
 
 function initCarrito() {
