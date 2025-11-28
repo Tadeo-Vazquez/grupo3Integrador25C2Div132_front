@@ -1,11 +1,11 @@
 let carrito = [];
 
-function guardarCarritoLocalStorage() {
-  localStorage.setItem("carritoJuegos", JSON.stringify(carrito));
+function guardarCarritosessionStorage() {
+  sessionStorage.setItem("carritoJuegos", JSON.stringify(carrito));
 }
 
-function cargarCarritoLocalStorage() {
-  const carritoGuardado = localStorage.getItem("carritoJuegos");
+function cargarCarritosessionStorage() {
+  const carritoGuardado = sessionStorage.getItem("carritoJuegos");
   if (carritoGuardado) {
     carrito = JSON.parse(carritoGuardado);
   }
@@ -88,7 +88,7 @@ function mostrarCarrito() {
 function aumentarCantidad(indice) {
   if (carrito[indice]) {
     carrito[indice].cantidad += 1;
-    guardarCarritoLocalStorage();
+    guardarCarritosessionStorage();
     mostrarCarrito();
   }
 }
@@ -101,7 +101,7 @@ function disminuirCantidad(indice) {
       eliminarElemento(indice);
       return;
     }
-    guardarCarritoLocalStorage();
+    guardarCarritosessionStorage();
     mostrarCarrito();
   }
 }
@@ -111,7 +111,7 @@ function eliminarElemento(indice) {
     confirm("¿Estás seguro de que querés eliminar este producto del carrito?")
   ) {
     carrito.splice(indice, 1);
-    guardarCarritoLocalStorage();
+    guardarCarritosessionStorage();
     mostrarCarrito();
   }
 }
@@ -119,7 +119,7 @@ function eliminarElemento(indice) {
 function vaciarCarrito() {
   if (confirm("¿Estás seguro de que querés vaciar el carrito?")) {
     carrito.length = 0;
-    guardarCarritoLocalStorage();
+    guardarCarritosessionStorage();
     mostrarCarrito();
   }
 }
@@ -147,7 +147,7 @@ const confirmarCompra = async () => {
 
     alert("Compra realizada! Ve a la caja con tu ticket a retirarla");
     carrito.length = 0
-    guardarCarritoLocalStorage()
+    guardarCarritosessionStorage()
     mostrarCarrito();
 
   } catch (error) {
@@ -158,7 +158,7 @@ const confirmarCompra = async () => {
 
 
 function initCarrito() {
-  cargarCarritoLocalStorage();
+  cargarCarritosessionStorage();
   mostrarCarrito();
 }
 

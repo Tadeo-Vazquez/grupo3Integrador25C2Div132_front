@@ -24,12 +24,12 @@ async function obtenerJuegos() {
 }
 
 
-function guardarCarritoLocalStorage() {
-  localStorage.setItem("carritoJuegos", JSON.stringify(carrito));
+function guardarCarritosessionStorage() {
+  sessionStorage.setItem("carritoJuegos", JSON.stringify(carrito));
 }
 
-function cargarCarritoLocalStorage() {
-  const carritoGuardado = localStorage.getItem("carritoJuegos");
+function cargarCarritosessionStorage() {
+  const carritoGuardado = sessionStorage.getItem("carritoJuegos");
   if (carritoGuardado) {
     carrito = JSON.parse(carritoGuardado);
   }
@@ -113,7 +113,7 @@ function agregarACarrito(id) {
 
  //  console.log(carrito);
 
-  guardarCarritoLocalStorage();
+  guardarCarritosessionStorage();
 
   //alert(`${juego.nombre} agregado al carrito!`);
 }
@@ -153,7 +153,7 @@ botonOrdenarPrecio.addEventListener("click", ordenarPorPrecio);
 //************************************************************************ *//
 
 async function init() {
-  cargarCarritoLocalStorage();
+  cargarCarritosessionStorage();
   const arrayDeJuegos = await obtenerJuegos();
 
   if (arrayDeJuegos && arrayDeJuegos.length > 0) {
