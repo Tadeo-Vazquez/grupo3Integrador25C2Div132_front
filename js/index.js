@@ -1,21 +1,23 @@
-const API_BASE_URL = "http://localhost:3000/api/productos";
+const URL_BASE = "http://localhost:3000/"
+const API_BASE_URL = URL_BASE + "api/productos";
 
 let todosLosJuegos = [];
 let carrito = [];
+let paginaActual = 1
 
-async function obtenerJuegos() {
+
+
+async function obtenerJuegos(limit, offset) {
   try {
-    const respuesta = await fetch(API_BASE_URL);
-   
-    const juegos = await respuesta.json();
+    const respuesta = await fetch(`${API_BASE_URL}?limit=${limit}&offset=${offset}`);
+    const datos = await respuesta.json();
 
-    console.log("Datos de los juegos API:", juegos);
-    if(!juegos){
-      todosLosJuegos = [];
+    console.log("Datos de los juegos de la API:", datos);
+    if(!datos || !datos.payload || !datos.payload.rows || datos.payload.total == null){
+      return{rows: [], total: 0};
     }
-    todosLosJuegos = juegos.payload
 
-    return todosLosJuegos;
+    return datos.payload
 
   } catch (error) {
     console.error("Hubo un error al obtener los juegos:", error);
@@ -64,7 +66,7 @@ function mostrarProductos(array) {
   array.forEach((juego) => {
     cartaProducto += `
         <div class="card-producto">
-          <img src="${juego.img_url || "img/placeholder.png"}" alt="${juego.nombre}" class="img-producto">
+          <img src="${URL_BASE}${juego.img_url || "img/placeholder.png"}" alt="${juego.nombre}" class="img-producto">
           <h3>${juego.nombre}</h3>
           <p>${juego.tipo.toUpperCase()}</p>
           <p>$ ${juego.precio}</p>
@@ -121,24 +123,53 @@ function agregarACarrito(id) {
 
 //******************Ordenamiento*******************//
 function ordenarPorPrecio() {
-  const juegos = todosLosJuegos;
-  juegos.sort((a, b) => a.precio - b.precio);
-  mostrarProductosReordenamiento(juegos);
+  mostrarProductosReordenamiento([...todosLosJuegos].sort((a, b) => a.precio - b.precio));
 }
 
 function ordenarPorNombre() {
-  const juegos = todosLosJuegos;
-  juegos.sort((a, b) => {
-    if (a.nombre < b.nombre) {
-      return -1;
-    }
-    if (a.nombre > b.nombre) {
-      return 1;
-    }
-    return 0;
-  });
-  mostrarProductosReordenamiento(juegos);
+  mostrarProductosReordenamiento(
+    [...todosLosJuegos].sort((a, b) => a.nombre.localeCompare(b.nombre))
+  );
 }
+
+
+
+
+async function pasarDePagina() {
+  const { total } = await obtenerJuegos(1, 0); // solo para obtener total  
+  let maximasPagDisp = total / 10
+  if (paginaActual < maximasPagDisp){
+    init(10,paginaActual * 10)
+    paginaActual ++;
+  }
+  console.log(paginaActual);
+  
+}
+async function volverPaginaAtras() {
+  if (paginaActual > 1){
+    paginaActual -= 1;
+    init(10,paginaActual * 10 - 10)
+  }  
+  console.log(paginaActual);
+  
+}
+
+
+//************************************************************************ *//
+
+async function init(limit=10,offset=0) {
+  cargarCarritosessionStorage();
+  const {rows,total} = await obtenerJuegos(limit,offset);
+  console.log(rows)
+  if (rows && rows.length > 0) {
+    todosLosJuegos = rows;
+    mostrarProductos(rows);
+  } else {
+    console.error("No se pudo obtener o el array está vacío.");
+  }
+}
+
+init(10,0);
 
 
 botonCategoria.addEventListener("click", event => {
@@ -148,20 +179,3 @@ botonCategoria.addEventListener("click", event => {
 botonOrdenarNombre.addEventListener("click", ordenarPorNombre);
 
 botonOrdenarPrecio.addEventListener("click", ordenarPorPrecio);
-
-
-//************************************************************************ *//
-
-async function init() {
-  cargarCarritosessionStorage();
-  const arrayDeJuegos = await obtenerJuegos();
-
-  if (arrayDeJuegos && arrayDeJuegos.length > 0) {
-    mostrarProductos(arrayDeJuegos);
-  } else {
-    console.error("No se pudo obtener o el array está vacío.");
-  }
-}
-
-init();
-
