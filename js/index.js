@@ -5,7 +5,11 @@ let todosLosJuegos = [];
 let carrito = [];
 let paginaActual = 1
 
-
+function verificarNombreIngresado(){
+  if (!sessionStorage.getItem("nombreCliente")){
+    location.href = "bienvenido.html"
+  }
+}
 
 async function obtenerJuegos(limit, offset) {
   try {
@@ -176,6 +180,7 @@ async function volverPaginaAtras() {
 //************************************************************************ *//
 
 async function init(limit=10,offset=0) {
+  verificarNombreIngresado()
   mostrarNombreBienvenidaCliente();
   cargarCarritosessionStorage();
   const {rows,total} = await obtenerJuegos(limit,offset);

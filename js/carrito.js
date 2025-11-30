@@ -1,3 +1,4 @@
+const URL_BASE = "http://localhost:3000/"
 let carrito = [];
 
 function guardarCarritosessionStorage() {
@@ -45,7 +46,7 @@ function mostrarCarrito() {
     htmlCarrito += `
       <li class="list-carrritoProducto">
       <div class="cont-info-producto">
-        <img src="${item.img_url || "img/placeholder.png"}" alt="${item.nombre}" class="img_carrito">
+        <img src="${URL_BASE}${item.img_url || "img/placeholder.png"}" alt="${item.nombre}" class="img_carrito">
         <div class="card-carrito-producto">
             <h3>${item.nombre}</h3>
             <div class="cont-datos-producto">
