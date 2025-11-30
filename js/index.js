@@ -37,6 +37,10 @@ function cargarCarritosessionStorage() {
   }
 }
 
+
+
+
+
 //**************************variables globales*****************************//
 
 let contenedorJuegos = document.getElementById("contenedor-productos");
@@ -45,9 +49,15 @@ const botonOrdenarNombre = document.getElementById("ordenar-por-nombre");
 
 const botonOrdenarPrecio = document.getElementById("ordenar-por-precio");
 
-const botonCategoria = document.getElementById("catProducto")
+const botonCategoria = document.getElementById("catProducto");
+
+ const h1 = document.getElementById('bienvenida');
 
 //*************************************************************************//
+
+
+
+
 function filtrarProductos(categoria) {
     let productosFiltrados = [];
     if (categoria === "todos") {
@@ -61,6 +71,14 @@ function filtrarProductos(categoria) {
   mostrarProductos(productosFiltrados);
 }
 
+function mostrarNombreBienvenidaCliente(){
+
+  const nombre = sessionStorage.getItem('nombreCliente');
+       
+    
+  h1.textContent = `Bienvenido ${nombre}!`;
+
+}
 function mostrarProductos(array) {
   let cartaProducto = "";
   array.forEach((juego) => {
@@ -158,6 +176,7 @@ async function volverPaginaAtras() {
 //************************************************************************ *//
 
 async function init(limit=10,offset=0) {
+  mostrarNombreBienvenidaCliente();
   cargarCarritosessionStorage();
   const {rows,total} = await obtenerJuegos(limit,offset);
   console.log(rows)
@@ -179,3 +198,4 @@ botonCategoria.addEventListener("click", event => {
 botonOrdenarNombre.addEventListener("click", ordenarPorNombre);
 
 botonOrdenarPrecio.addEventListener("click", ordenarPorPrecio);
+
