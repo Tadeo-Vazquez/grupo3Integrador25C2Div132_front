@@ -305,3 +305,84 @@ nav ul a:hover {
   transform: scale(1.05);  
   font-weight: 600;
 }
+
+#body-welcome-user{
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-container{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  background-color: #00000054;
+  padding: 50px;
+  border-radius: 20px;
+}
+
+.welcome-container h1{
+  margin: 0;
+}
+
+.welcome-container p{
+  font-size: 22px;
+}
+
+.welcome-container input{
+  padding: 8px;
+  border: 2px solid rgb(0, 110, 255);
+  border-radius: 5px;
+}
+
+.welcome-container input:focus{
+    box-shadow: 0px 0px 16px 8px rgba(71, 226, 253, 0.75);
+  border: none;
+  
+}
+
+.welcome-container button{
+  padding: 7px;
+  width: 80px;
+  height: 80px;
+  border: 2px solid black;
+  border-radius: 50%;
+  background-color: rgb(0, 255, 64);
+}
+
+.gamer-fixed-logo {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 10px 15px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+}
+
+.gamer-info h2 {
+  margin: 0;
+  font-size: 16px;
+  color: #fff;
+}
+
+.gamer-info p {
+  margin: 0;
+  font-size: 13px;
+  color: #ddd;
+}
+
+#imagen-logo-texto{
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 100px;
+  
+}
