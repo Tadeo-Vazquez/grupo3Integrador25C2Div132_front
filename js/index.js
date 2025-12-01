@@ -1,9 +1,11 @@
 const URL_BASE = "http://localhost:3000/"
 const API_BASE_URL = URL_BASE + "api/productos";
 
-let todosLosJuegos = [];
+let todosLosJuegos = {};
 let carrito = [];
 let paginaActual = 1
+sessionStorage.setItem("categoriaActual","todos")
+sessionStorage.setItem("ordenActual","")
 
 function verificarNombreIngresado(){
   if (!sessionStorage.getItem("nombreCliente")){
@@ -11,9 +13,10 @@ function verificarNombreIngresado(){
   }
 }
 
-async function obtenerJuegos(limit, offset) {
+async function obtenerJuegos(limit, offset, categoria="todos",orderBy="") {
   try {
-    const respuesta = await fetch(`${API_BASE_URL}?limit=${limit}&offset=${offset}`);
+    const reqParams = `?limit=${limit}&offset=${offset}&soloActivos=true&categoria=${categoria}&orderBy=${orderBy}`
+    const respuesta = await fetch(`${API_BASE_URL}${reqParams}`);
     const datos = await respuesta.json();
 
     console.log("Datos de los juegos de la API:", datos);
@@ -55,24 +58,18 @@ const botonOrdenarPrecio = document.getElementById("ordenar-por-precio");
 
 const botonCategoria = document.getElementById("catProducto");
 
- const h1 = document.getElementById('bienvenida');
+const h1 = document.getElementById('bienvenida');
+
+let paginaActualIndice = document.getElementById("paginaActual")
 
 //*************************************************************************//
 
 
 
 
-function filtrarProductos(categoria) {
-    let productosFiltrados = [];
-    if (categoria === "todos") {
-    productosFiltrados = todosLosJuegos;
-    }else{
-      productosFiltrados = todosLosJuegos.filter((juego) =>
-      juego.tipo === categoria
-   );
-    }
-
-  mostrarProductos(productosFiltrados);
+async function filtrarProductos(categoria) {
+  let {rows} = await obtenerJuegos(10, (paginaActual - 1) * 10, categoria);
+  mostrarProductos(rows);
 }
 
 function mostrarNombreBienvenidaCliente(){
@@ -118,7 +115,9 @@ function mostrarProductosReordenamiento(productos) {
 }
 
 function agregarACarrito(id) {
-  const juego = todosLosJuegos.find((j) => j.id === id);
+  console.log(todosLosJuegos);
+    
+  const juego = todosLosJuegos.rows.find((j) => j.id === id);
 
   const itemExistente = carrito.find((item) => item.id === id);
 
@@ -145,12 +144,12 @@ function agregarACarrito(id) {
 
 //******************Ordenamiento*******************//
 function ordenarPorPrecio() {
-  mostrarProductosReordenamiento([...todosLosJuegos].sort((a, b) => a.precio - b.precio));
+  init(pag)
 }
 
 function ordenarPorNombre() {
   mostrarProductosReordenamiento(
-    [...todosLosJuegos].sort((a, b) => a.nombre.localeCompare(b.nombre))
+    [...todosLosJuegos.rows].sort((a, b) => a.nombre.localeCompare(b.nombre))
   );
 }
 
@@ -158,11 +157,12 @@ function ordenarPorNombre() {
 
 
 async function pasarDePagina() {
-  const { total } = await obtenerJuegos(1, 0); // solo para obtener total  
+  const { rows,total } = await obtenerJuegos(1, 0,sessionStorage.getItem("categoriaActual")); // solo para obtener total  
   let maximasPagDisp = total / 10
   if (paginaActual < maximasPagDisp){
-    init(10,paginaActual * 10)
+    init(10,paginaActual * 10,sessionStorage.getItem("categoriaActual"),sessionStorage.getItem("ordenActual"))
     paginaActual ++;
+    paginaActualIndice.innerHTML = `${paginaActual}`
   }
   console.log(paginaActual);
   
@@ -170,7 +170,8 @@ async function pasarDePagina() {
 async function volverPaginaAtras() {
   if (paginaActual > 1){
     paginaActual -= 1;
-    init(10,paginaActual * 10 - 10)
+    init(10,paginaActual * 10 - 10,sessionStorage.getItem("categoriaActual"),sessionStorage.getItem("ordenActual"))
+    paginaActualIndice.innerHTML = `${paginaActual}`
   }  
   console.log(paginaActual);
   
@@ -179,14 +180,14 @@ async function volverPaginaAtras() {
 
 //************************************************************************ *//
 
-async function init(limit=10,offset=0) {
+async function init(limit=10,offset=0,categoria="todos",orderBy="") {
   verificarNombreIngresado()
   mostrarNombreBienvenidaCliente();
   cargarCarritosessionStorage();
-  const {rows,total} = await obtenerJuegos(limit,offset);
+  const {rows,total} = await obtenerJuegos(limit,offset,categoria,orderBy);
   console.log(rows)
   if (rows && rows.length > 0) {
-    todosLosJuegos = rows;
+    todosLosJuegos = {rows,total};
     mostrarProductos(rows);
   } else {
     console.error("No se pudo obtener o el array está vacío.");
@@ -197,10 +198,23 @@ init(10,0);
 
 
 botonCategoria.addEventListener("click", event => {
-  filtrarProductos(event.target.value);
+  if (event.target.value !== sessionStorage.getItem("categoriaActual")){
+    sessionStorage.setItem("categoriaActual",event.target.value)
+    for (let i = 0 ; i < paginaActual; i++){
+      volverPaginaAtras()
+    }
+    filtrarProductos(event.target.value);
+    console.log(event.target.value);
+  }
 });
 
-botonOrdenarNombre.addEventListener("click", ordenarPorNombre);
+botonOrdenarNombre.addEventListener("click", () => {
+  sessionStorage.setItem("ordenActual","nombre")
+  init(10,(paginaActual-1)*10,sessionStorage.getItem("categoriaActual"),"nombre")
+});
 
-botonOrdenarPrecio.addEventListener("click", ordenarPorPrecio);
+botonOrdenarPrecio.addEventListener("click", () => {
+  sessionStorage.setItem("ordenActual","precio")
+  init(10,(paginaActual-1)*10,sessionStorage.getItem("categoriaActual"),"precio")
+});
 

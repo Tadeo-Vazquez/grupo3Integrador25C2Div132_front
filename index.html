@@ -13,7 +13,8 @@
       rel="stylesheet"
     />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
-
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="icon" type="image/png" href="http://localhost:3000/img/iconIndex.png">
 
   </head>
@@ -55,10 +56,13 @@
             <button id="ordenar-por-precio" class="boton-filtro">Ordenar por Precio (Menor a Mayor)</button>
         </div>
       </div>
-      <button id="nextPagButton" onclick="pasarDePagina()">Siguiente Pagina</button>
-      <button id="prevPagButton" onclick="volverPaginaAtras()">Anterior Pagina</button>
-
+      
       <section id="contenedor-productos"></section>
+      <div id="container-pag-buttons">
+        <button id="prevPagButton" onclick="volverPaginaAtras()"><ion-icon name="arrow-back-circle-outline"></ion-icon></button>
+        <span id="paginaActual">1</span>
+        <button id="nextPagButton" onclick="pasarDePagina()"><ion-icon name="arrow-forward-circle-outline"></ion-icon></button>
+      </div>
     </main>
   </body>
 </html>
