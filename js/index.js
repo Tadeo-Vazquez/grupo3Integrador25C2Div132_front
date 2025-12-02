@@ -69,7 +69,7 @@ let paginaActualIndice = document.getElementById("paginaActual")
 
 async function filtrarProductos(categoria) {
   let {rows} = await obtenerJuegos(10, (paginaActual - 1) * 10, categoria);
-  mostrarProductos(rows);
+  mostrarProductosAnimacion(rows);
 }
 
 function mostrarNombreBienvenidaCliente(){
@@ -98,7 +98,7 @@ function mostrarProductos(array) {
   contenedorJuegos.innerHTML = cartaProducto;
 }
 
-function mostrarProductosReordenamiento(productos) {
+function mostrarProductosAnimacion(productos) {
   const contenedor = document.getElementById("contenedor-productos");
 
     // desaparecer los productos
@@ -148,7 +148,7 @@ function ordenarPorPrecio() {
 }
 
 function ordenarPorNombre() {
-  mostrarProductosReordenamiento(
+  mostrarProductosAnimacion(
     [...todosLosJuegos.rows].sort((a, b) => a.nombre.localeCompare(b.nombre))
   );
 }
@@ -188,7 +188,7 @@ async function init(limit=10,offset=0,categoria="todos",orderBy="") {
   console.log(rows)
   if (rows && rows.length > 0) {
     todosLosJuegos = {rows,total};
-    mostrarProductos(rows);
+    mostrarProductosAnimacion(rows);
   } else {
     console.error("No se pudo obtener o el array está vacío.");
   }
