@@ -1,5 +1,3 @@
-import { response } from "express";
-
 const URL_BASE = "http://localhost:3000/"
 let carrito = [];
 
