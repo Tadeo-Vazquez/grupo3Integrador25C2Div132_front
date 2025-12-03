@@ -100,17 +100,13 @@ function mostrarProductos(array) {
 
 function mostrarProductosAnimacion(productos) {
   const contenedor = document.getElementById("contenedor-productos");
-
     // desaparecer los productos
     contenedor.classList.add("fade-out");
-
     setTimeout(() => {
       // mostrar productos desaparecidos
       mostrarProductos(productos);
-
       // aparecer productos ordenados
       contenedor.classList.remove("fade-out");
-
   }, 400); 
 }
 

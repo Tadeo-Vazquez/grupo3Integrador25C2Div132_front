@@ -1,3 +1,5 @@
+import { response } from "express";
+
 const URL_BASE = "http://localhost:3000/"
 let carrito = [];
 
@@ -19,7 +21,6 @@ const precioTotalCarrito = document.getElementById("precio-total-carrito");
 const botonVaciarCarrito = document.getElementById("boton-vaciar-carrito");
 const botonConfirmarCompra = document.getElementById("boton-confirmar-compra");
 const carritoPieDePagina = document.getElementById("carrito-pie-de-pagina")
-
 
 
 function calcularPrecioTotal() {
@@ -84,6 +85,31 @@ function mostrarCarrito() {
   listaCarrito.innerHTML = htmlCarrito;
 }
 
+function imprimirTicket(){
+  const {jsPDF} = window.jspdf;
+  const doc = new jsPDF();
+
+  // margen superior de 10px en el eje y del ticket
+  let y = 20;
+  doc.setFontSize(18)
+  // escribimos el texto del ticket en la posicion x=10 y=10
+  doc.text("Gamer-Ticket de compra: ", 10, y)
+
+  y += 20;
+  doc.setFontSize(12);
+  carrito.forEach(p => {
+      doc.text(`${p.nombre}`, 30, y)      
+      doc.text(`$${p.precio} x${p.cantidad}`, 120, y)
+      y += 10;
+  })
+  let total = carrito.reduce((acum,p) => acum + p.precio * p.cantidad, 0)
+  y += 5;
+  doc.text(`Total: $${total}`, 30, y)      
+
+  // imprimimos ticket de venta
+  doc.save("ticket.pdf")
+
+}
 
 
 function aumentarCantidad(indice) {
@@ -125,36 +151,41 @@ function vaciarCarrito() {
   }
 }
 
-const confirmarCompra = async () => {
-  if (!confirm("Deseas confirmar la compra?")){
-    return;
-  } ;
-
-  const datosVenta = {
-    fecha: new Date().toISOString().slice(0, 19).replace("T", " "),
-    nombre_usuario: "AGREGAR LOGIN",
-    productos: carrito
-  };
-
+async function registrarVenta(datosVenta){
   try {
     const respuesta = await fetch("http://localhost:3000/api/ventas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datosVenta)
     });
-
+    
     const resultado = await respuesta.json();
     console.log(resultado);
-
-    alert("Compra realizada! Ve a la caja con tu ticket a retirarla");
-    carrito.length = 0
-    guardarCarritosessionStorage()
-    mostrarCarrito();
-
-  } catch (error) {
+  }catch (error) {
     console.error("Error al enviar los datos: ", error);
     alert("Error al procesar la solicitud");
   }
+}
+const confirmarCompra = async () => {
+  if (!confirm("Deseas confirmar la compra?")){
+    return;
+  } ;
+  const datosVenta = {
+    fecha: new Date()
+        .toLocaleString("sv-SE", { hour12: false })  
+        .replace("T", " "),
+    nombre_usuario: sessionStorage.getItem("nombreCliente"),
+    productos: carrito
+  };
+  
+  registrarVenta(datosVenta)
+  alert("Compra realizada! Ve a la caja con tu ticket a retirarla");
+  imprimirTicket()
+  carrito.length = 0
+  guardarCarritosessionStorage()
+  mostrarCarrito();
+  sessionStorage.removeItem("nombreCliente")
+  location.href = "bienvenido.html"
 };
 
 
