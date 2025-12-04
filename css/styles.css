@@ -33,21 +33,25 @@ header{
   padding: 10px;
   border-radius: 50%;
   transition: all .5s;
-  transition: transform 0.2s ease;
+  transition: all 0.4s ease;
 }
 
 #link-carrito:hover{
   transform: rotate(360deg);
+  background-color: #000000;
+  color: white;
 }
+
 
 #link-carrito.rotate {
   transform: rotateY(360deg);
-  background-color: greenyellow;
+  background-color: rgb(120, 255, 47);
 }
 
 
-header a img {
+header a ion-icon {
   width: 40px;
+  height: 40px;
   min-width: 40px;
 }
 
@@ -107,7 +111,6 @@ main {
 
 nav ul {
   background-color: rgba(232, 245, 255, 0.774);
-  padding: 10px;
   border-radius: 15px;
   margin: 0 auto;
   width: 400px;
@@ -115,12 +118,17 @@ nav ul {
 }
 
 nav ul a{
-  padding: 10px;
+  width: 400px;
+  max-width: 100%;
+  padding: 20px;
   border-radius: 10px;
   transition: all .5s;
   font-family: "Momo Trust Display", sans-serif;
   font-size: 20px;
+  display: flex;
+  justify-content: center;
 }
+
 
 nav ul a:hover {
   background: rgb(0, 0, 0);
