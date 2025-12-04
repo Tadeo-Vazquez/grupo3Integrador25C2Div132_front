@@ -1,6 +1,7 @@
 const URL_BASE = "http://localhost:3000/"
 const API_BASE_URL = URL_BASE + "api/productos";
 
+const prodPorPag = 8;
 let todosLosJuegos = {};
 let carrito = [];
 let paginaActual = 1
@@ -62,13 +63,15 @@ const h1 = document.getElementById('bienvenida');
 
 let paginaActualIndice = document.getElementById("paginaActual")
 
+const linkCarrito = document.getElementById("link-carrito")
+
 //*************************************************************************//
 
 
 
 
 async function filtrarProductos(categoria) {
-  let {rows} = await obtenerJuegos(10, (paginaActual - 1) * 10, categoria);
+  let {rows} = await obtenerJuegos(prodPorPag, (paginaActual - 1) * prodPorPag, categoria);
   mostrarProductosAnimacion(rows);
 }
 
@@ -129,6 +132,9 @@ function agregarACarrito(id) {
       cantidad: 1,
     });
   }
+  linkCarrito.classList.remove("rotate");
+  linkCarrito.classList.add("rotate");
+  setTimeout(() => linkCarrito.classList.remove("rotate"), 250);
 
  //  console.log(carrito);
 
@@ -154,9 +160,9 @@ function ordenarPorNombre() {
 
 async function pasarDePagina() {
   const { rows,total } = await obtenerJuegos(1, 0,sessionStorage.getItem("categoriaActual")); // solo para obtener total  
-  let maximasPagDisp = total / 10
+  let maximasPagDisp = total / prodPorPag
   if (paginaActual < maximasPagDisp){
-    init(10,paginaActual * 10,sessionStorage.getItem("categoriaActual"),sessionStorage.getItem("ordenActual"))
+    init(prodPorPag,paginaActual * prodPorPag,sessionStorage.getItem("categoriaActual"),sessionStorage.getItem("ordenActual"))
     paginaActual ++;
     paginaActualIndice.innerHTML = `${paginaActual}`
   }
@@ -166,7 +172,7 @@ async function pasarDePagina() {
 async function volverPaginaAtras() {
   if (paginaActual > 1){
     paginaActual -= 1;
-    init(10,paginaActual * 10 - 10,sessionStorage.getItem("categoriaActual"),sessionStorage.getItem("ordenActual"))
+    init(prodPorPag,paginaActual * prodPorPag - prodPorPag,sessionStorage.getItem("categoriaActual"),sessionStorage.getItem("ordenActual"))
     paginaActualIndice.innerHTML = `${paginaActual}`
   }  
   console.log(paginaActual);
@@ -176,7 +182,7 @@ async function volverPaginaAtras() {
 
 //************************************************************************ *//
 
-async function init(limit=10,offset=0,categoria="todos",orderBy="") {
+async function init(limit=prodPorPag,offset=0,categoria="todos",orderBy="") {
   verificarNombreIngresado()
   mostrarNombreBienvenidaCliente();
   cargarCarritosessionStorage();
@@ -190,7 +196,7 @@ async function init(limit=10,offset=0,categoria="todos",orderBy="") {
   }
 }
 
-init(10,0);
+init(prodPorPag,0);
 
 
 botonCategoria.addEventListener("click", event => {
@@ -206,11 +212,11 @@ botonCategoria.addEventListener("click", event => {
 
 botonOrdenarNombre.addEventListener("click", () => {
   sessionStorage.setItem("ordenActual","nombre")
-  init(10,(paginaActual-1)*10,sessionStorage.getItem("categoriaActual"),"nombre")
+  init(prodPorPag,(paginaActual-1)*prodPorPag,sessionStorage.getItem("categoriaActual"),"nombre")
 });
 
 botonOrdenarPrecio.addEventListener("click", () => {
   sessionStorage.setItem("ordenActual","precio")
-  init(10,(paginaActual-1)*10,sessionStorage.getItem("categoriaActual"),"precio")
+  init(prodPorPag,(paginaActual-1)*prodPorPag,sessionStorage.getItem("categoriaActual"),"precio")
 });
 

@@ -167,7 +167,7 @@ async function registrarVenta(datosVenta){
 const confirmarCompra = async () => {
   if (!confirm("Deseas confirmar la compra?")){
     return;
-  } ;
+  } ;                                                                  
   const datosVenta = {
     fecha: new Date()
         .toLocaleString("sv-SE", { hour12: false })  
