@@ -83,31 +83,86 @@ function mostrarCarrito() {
   listaCarrito.innerHTML = htmlCarrito;
 }
 
-function imprimirTicket(){
-  const {jsPDF} = window.jspdf;
-  const doc = new jsPDF();
+function imprimirTicket(datosVenta) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({
+    unit: "px", // píxeles para que sea más parecido a un ticket real
+    format: [250, 600] // tamaño tipo ticket
+  });
 
-  // margen superior de 10px en el eje y del ticket
   let y = 20;
-  doc.setFontSize(18)
-  // escribimos el texto del ticket en la posicion x=10 y=10
-  doc.text("Gamer-Ticket de compra: ", 10, y)
 
+  // -------- TÍTULO --------
+  doc.setFontSize(20);
+  doc.text("GAMER-TICKET", 70, y);
   y += 20;
-  doc.setFontSize(12);
-  carrito.forEach(p => {
-      doc.text(`${p.nombre}`, 30, y)      
-      doc.text(`$${p.precio} x${p.cantidad}`, 120, y)
-      y += 10;
-  })
-  let total = carrito.reduce((acum,p) => acum + p.precio * p.cantidad, 0)
-  y += 5;
-  doc.text(`Total: $${total}`, 30, y)      
 
-  // imprimimos ticket de venta
-  doc.save("ticket.pdf")
+  doc.setFontSize(10);
+  doc.text("Tu ticket para retirar tu compra", 80, y);
+  y += 20;
+
+  // -------- DATOS PRINCIPALES --------
+  doc.setFontSize(10);
+  const fecha = datosVenta.fecha;  
+  const usuario = datosVenta.nombre_usuario || "Cliente";
+
+  doc.text(`ORDEN PARA: ${usuario}`, 10, y); 
+  y += 12;
+
+  doc.text(fecha, 10, y);
+  y += 15;
+
+  doc.line(10, y, 230, y);
+  y += 10;
+
+  // -------- TITULOS DE COLUMNAS --------
+  doc.text("CANT", 10, y);
+  doc.text("NOMBRE", 50, y);
+  doc.text("PRECIO", 190, y);
+  y += 10;
+
+  doc.line(10, y, 230, y);
+  y += 10;
+
+  // -------- LISTA DE PRODUCTOS --------
+  doc.setFontSize(10);
+
+  carrito.forEach((p, index) => {
+    doc.text(String(index).padStart(2, "0"), 10, y);
+    doc.text(p.nombre, 50, y);
+    doc.text(`${p.cantidad} x $${p.precio}`, 175, y);
+    y += 12;
+  });
+
+  y += 10;
+  doc.line(10, y, 230, y);
+  y += 10;
+
+  // -------- TOTAL --------
+  let total = carrito.reduce((acum, p) => acum + p.precio * p.cantidad, 0);
+  let cantItems = carrito.reduce((acum,p) => acum + p.cantidad, 0)
+  doc.setFontSize(12);
+  doc.text(`TOTAL JUEGOS: ${cantItems}`, 10, y);
+  y += 14;
+
+  doc.text(`PRECIO TOTAL: $${total}`, 10, y);
+  y += 20;
+
+  doc.line(10, y, 230, y);
+  y += 20;
+
+  // -------- FOOTER --------
+  doc.setFontSize(10);
+  doc.text("GRACIAS POR SU COMPRA!", 55, y);
+  y += 20;
+
+  doc.text("gamer-shop.com", 70, y);
+
+  // -------- GUARDAR PDF --------
+  doc.save("gamer-ticket.pdf");
 
 }
+
 
 
 function aumentarCantidad(indice) {
@@ -178,7 +233,7 @@ const confirmarCompra = async () => {
   
   registrarVenta(datosVenta)
   alert("Compra realizada! Ve a la caja con tu ticket a retirarla");
-  imprimirTicket()
+  imprimirTicket(datosVenta)
   carrito.length = 0
   guardarCarritosessionStorage()
   mostrarCarrito();
