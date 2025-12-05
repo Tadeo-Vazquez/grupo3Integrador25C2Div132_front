@@ -466,3 +466,10 @@ nav ul a:hover {
   width: 30px;
   height: 30px;
 }
+
+#catProducto{
+  width: 150px;
+  height: 40px;
+  font-size: 18px;
+  font-weight: 700;
+}
